@@ -1,0 +1,127 @@
+import pilas
+import random
+from pilas.escenas import Normal
+from pilas.actores import Actor
+
+pilas.iniciar()
+        #Clase LADRILLO
+class Ladrillo(Actor):
+        def __init__(self, x=0,y=240):
+            xLa=[200,0,-200]
+            imagen = pilas.imagenes.cargar('ladri.png')
+            random.shuffle(xLa)
+            Actor.__init__(self, imagen)
+            self.rotacion = 2
+            self.x = xLa
+            self.y = y
+            self.radio_de_colision = 30
+            self.escala=0.2
+
+        def actualizar(self):
+            self.y=self.y-2
+            if self.y == -220:
+                self.y=240
+            
+#Clase HERRAMIENTA
+class Herramienta(Actor):
+        def __init__(self, x=0,y=240):
+            xHe=[200,0,-200]
+            imagen = pilas.imagenes.cargar('LLave.png')
+            random.shuffle(xHe)
+            Actor.__init__(self, imagen)
+            self.rotacion = 0
+            self.x = xHe
+            self.y = y
+            self.radio_de_colision = 30
+            self.escala=0.1
+
+        def actualizar(self):
+            self.y=self.y-2
+            if self.y == -210:
+                self.y=240
+#Clase PASTO
+class pasto(Actor):
+    def __init__(self,x=0,y=0):
+        imagen=pilas.imagenes.cargar("pasto.png")
+        Actor.__init__(self,imagen)
+        self.rotacion = 0
+        self.x = x
+        self.y = y
+        self.radio_de_colision = 30
+        self.escala=0.5
+
+
+class EscenaDeMenu(pilas.escena.Base):
+
+    def __init__(self):
+        pilas.escena.Base.__init__(self)
+
+    def iniciar(self):
+        fondo = pilas.actores.Actor('pp.jpg')
+
+        opciones = [
+		    ('Comenzar a jugar', self.comenzar),
+		    ('Salir', self.salir)]
+
+        self.menu = pilas.actores.Menu(opciones)
+
+    def comenzar(self):
+        pilas.cambiar_escena(EscenaDeJuego())
+
+    def salir(self):
+        import sys
+        sys.exit(0)
+
+
+class EscenaDeJuego(pilas.escena.Base):
+
+    def __init__(self):
+        pilas.escena.Base.__init__(self)
+    	self.pared = pilas.actores.Actor("ladrillo.jpg")
+        self.c=pilas.actores.Cooperativista()
+        self.ladrillo=Ladrillo()*3
+        self.herramientas=[Herramienta(),Herramienta(),Herramienta()]
+        self.texto = pilas.actores.Texto('Puntos:')
+        self.t = pilas.actores.Temporizador()
+
+    #tito
+    c.escala=0.8
+    c.y=-209
+    c.radio_de_colision=30
+    c.aprender(pilas.habilidades.SeMantieneEnPantalla)
+    #Ladrillos
+    def choque_con_ladrillo(ladrillo,c):
+        ladrillo.eliminar()
+        pilas.terminar()
+    pilas.escena_actual().colisiones.agregar(ladrillo,c,choque_con_ladrillo)
+    puntaje = pilas.actores.Puntaje(x=206,y=210)
+    #Herramientas
+    def choque_con_herramienta(herramientas,c):
+        puntaje.aumentar(1)
+        herramientas.y=240
+        pilas.avisar('BIEN HECHO!!')
+
+    pilas.escena_actual().colisiones.agregar(herramientas,c,choque_con_herramienta)
+    #Puntaje
+    texto.x = 130
+    texto.y = 210
+
+
+    #Temporizador
+
+    def funcion_callback():
+        pilas.avisar("El juego termino!")
+
+    t.ajustar(60, funcion_callback)
+    t.iniciar()
+    t.y= 210
+
+        pilas.eventos.pulsa_tecla.conectar(self.cuando_pulsa_tecla)
+
+    def cuando_pulsa_tecla(self, evento):
+        if evento.texto == u'q':
+            pilas.cambiar_escena(EscenaDeMenu())
+	
+# Carga la nueva escena
+pilas.cambiar_escena(EscenaDeMenu())
+pilas.ejecutar()

@@ -1,0 +1,5 @@
+#con esto haces la animacion para que suba y baja
+if self.num==2:
+    self.y += 4.7#subiendo
+    if self.y >= 170:
+        self.y = [-80],0.7#bajando como animacion

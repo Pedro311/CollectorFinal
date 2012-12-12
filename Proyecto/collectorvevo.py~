@@ -1,0 +1,280 @@
+import pilas
+from pilas.escenas import Normal
+from pilas.actores import Actor
+pilas.iniciar()
+fondo = pilas.actores.Actor('ladrillo.jpg')
+
+
+#Clase LADRILLO centro
+class LadrilloCe(Actor):
+        def __init__(self, x=0, y=240):
+            imagen = pilas.imagenes.cargar('ladri.png')
+            Actor.__init__(self, imagen)
+            self.rotacion = 0
+            self.x = x
+            self.y = y
+            self.radio_de_colision = 25
+            self.aprender(pilas.habilidades.RebotarComoCaja)
+            self.escala=0.2
+
+class LadrilloCe2(Actor):
+        def __init__(self, x=0, y=240):
+            imagen = pilas.imagenes.cargar('ladri.png')
+            Actor.__init__(self, imagen)
+            self.rotacion = 0
+            self.x = x
+            self.y = y
+            self.radio_de_colision = 25
+            self.aprender(pilas.habilidades.RebotarComoCaja)
+            self.escala=0.2
+#Clase LADRILLO derecha
+class LadrilloDe(Actor):
+        def __init__(self, x=200, y=240):
+            imagen = pilas.imagenes.cargar('ladri.png')
+            Actor.__init__(self, imagen)
+            self.rotacion = 0
+            self.x = x
+            self.y = y
+            self.radio_de_colision = 25
+            self.aprender(pilas.habilidades.RebotarComoCaja)
+            self.escala=0.2
+
+class LadrilloDe2(Actor):
+        def __init__(self, x=200, y=240):
+            imagen = pilas.imagenes.cargar('ladri.png')
+            Actor.__init__(self, imagen)
+            self.rotacion = 0
+            self.x = x
+            self.y = y
+            self.radio_de_colision = 25
+            self.aprender(pilas.habilidades.RebotarComoCaja)
+            self.escala=0.2
+#Clase LADRILLO izquierda
+class LadrilloIz(Actor):
+        def __init__(self, x=-200, y=230):
+            imagen = pilas.imagenes.cargar('ladri.png')
+            Actor.__init__(self, imagen)
+            self.rotacion = 0
+            self.x = x
+            self.y = y
+            self.radio_de_colision = 25
+            self.aprender(pilas.habilidades.RebotarComoCaja)
+            self.escala=0.2
+
+class LadrilloIz2(Actor):
+        def __init__(self, x=-200, y=230):
+            imagen = pilas.imagenes.cargar('ladri.png')
+            Actor.__init__(self, imagen)
+            self.rotacion = 0
+            self.x = x
+            self.y = y
+            self.radio_de_colision = 25
+            self.aprender(pilas.habilidades.RebotarComoCaja)
+            self.escala=0.2
+#Clase HERRAMIENTA derecha
+class HerramientaDe(Actor):
+    def __init__(self,x=123,y=230):
+        imagen =pilas.imagenes.cargar('LLave.png')
+        Actor.__init__(self,imagen)
+        self.radio_de_colision = 25
+        self.aprender(pilas.habilidades.RebotarComoCaja)
+        self.escala=0.1
+        self.x = pilas.interpolar([300,200,250,150], duracion=6)
+
+class HerramientaDe2(Actor):
+    def __init__(self,x=123,y=230):
+        imagen =pilas.imagenes.cargar('LLave.png')
+        Actor.__init__(self,imagen)
+        self.rotacion = 2
+        self.x = x
+        self.y = y
+        self.radio_de_colision = 25
+        self.aprender(pilas.habilidades.RebotarComoCaja)
+        self.escala=0.1
+        self.x = pilas.interpolar([300,200,250,150], duracion=6)
+#Clase HERRAMIENTA izquierda
+class HerramientaIz(Actor):
+    def __init__(self,x=-123,y=230):
+        imagen =pilas.imagenes.cargar('LLave.png')
+        Actor.__init__(self,imagen)
+        self.rotacion = 0
+        self.x = x
+        self.y = y
+        self.radio_de_colision = 25
+        self.aprender(pilas.habilidades.RebotarComoCaja)
+        self.escala=0.1
+        self.x = pilas.interpolar([-300,-200,-250,-150], duracion=6)
+class HerramientaIz2(Actor):
+    def __init__(self,x=123,y=230):
+        imagen =pilas.imagenes.cargar('LLave.png')
+        Actor.__init__(self,imagen)
+        self.rotacion = 2
+        self.x = x
+        self.y = y
+        self.radio_de_colision = 25
+        self.aprender(pilas.habilidades.RebotarComoCaja)
+        self.escala=0.1
+        self.x = pilas.interpolar([-300,-200,-250,-150], duracion=6)
+#Clase PASTO
+class pasto(Actor):
+    def __init__(self,x=0,y=0):
+        imagen=pilas.imagenes.cargar("pasto.png")
+        Actor.__init__(self,imagen)
+        self.rotacion = 0
+        self.x = x
+        self.y = y
+        self.radio_de_colision = 30
+        self.escala=0.5
+
+def iniciar_juego():
+    pilas.escenas.Normal()
+    pared = pilas.actores.Actor("ladrillo.jpg")
+    plataforma = pasto()*15
+    plataforma.y=-210
+    plataforma[0].x=-260
+    plataforma[1].x=-210
+    plataforma[2].x=-160
+    plataforma[3].x=-110
+    plataforma[4].x=-60
+    plataforma[5].x=-5
+    plataforma[6].x=50
+    plataforma[7].x=90
+    plataforma[8].x=150
+    plataforma[9].x=100
+    plataforma[10].x=294
+    plataforma[11].x=260
+    plataforma[12].x=212
+    plataforma[13].x=-293
+    plataforma[14].x=170
+
+    #tito
+    c=pilas.actores.Cooperativista()
+    d=pilas.actores.Dialogo()
+    c.escala=0.8
+    c.y=-209
+    c.radio_de_colision=30
+    c.aprender(pilas.habilidades.SeMantieneEnPantalla)
+    #Ladrillos Centro
+    ladrillo=LadrilloCe()
+    def choque_con_ladrillo(ladrillo,c):
+        ladrillo.eliminar()
+        pilas.avisar("GAME OVER")
+    pilas.escena_actual().colisiones.agregar(ladrillo,c,choque_con_ladrillo)
+    def choque_con_piso(ladrillo,plataforma):
+        ladrillo.eliminar()
+    pilas.escena_actual().colisiones.agregar(ladrillo,plataforma,choque_con_piso)
+
+    def crearla():
+        ladri=LadrilloCe2()
+        def choque_con_ladrillo(ladri,c):
+            ladri.eliminar()
+            pilas.avisar("GAME OVER")
+        pilas.escena_actual().colisiones.agregar(ladri,c,choque_con_ladrillo)
+        def choque_con_piso(ladri,plataforma):
+            ladri.eliminar()
+        pilas.escena_actual().colisiones.agregar(ladri,plataforma,choque_con_piso)
+
+        return True
+    pilas.escena_actual().tareas.siempre(1/0.5, crearla)
+    puntaje = pilas.actores.Puntaje(x=170,y=210)
+    #Ladrillos Derecha
+    ladrillo=LadrilloDe()
+    def choque_con_ladrillo(ladrillo,c):
+        ladrillo.eliminar()
+    pilas.escena_actual().colisiones.agregar(ladrillo,c,choque_con_ladrillo)
+    def choque_con_piso(ladrillo,plataforma):
+        ladrillo.eliminar()
+    pilas.escena_actual().colisiones.agregar(ladrillo,plataforma,choque_con_piso)
+
+    def crearla():
+        ladri=LadrilloDe2()
+        def choque_con_ladrillo(ladri,c):
+            ladri.eliminar()
+        pilas.escena_actual().colisiones.agregar(ladri,c,choque_con_ladrillo)
+        def choque_con_piso(ladri,plataforma):
+            ladri.eliminar()
+        pilas.escena_actual().colisiones.agregar(ladri,plataforma,choque_con_piso)
+
+        return True
+    pilas.escena_actual().tareas.siempre(1/0.5, crearla)
+    #Ladrillos Izquierda
+    ladrillo=LadrilloIz()
+    def choque_con_ladrillo(ladrillo,c):
+        ladrillo.eliminar()
+        pun
+    pilas.escena_actual().colisiones.agregar(ladrillo,c,choque_con_ladrillo)
+    def choque_con_piso(ladrillo,plataforma):
+        ladrillo.eliminar()
+    pilas.escena_actual().colisiones.agregar(ladrillo,plataforma,choque_con_piso)
+
+    def crearla():
+        ladri=LadrilloIz2()
+        def choque_con_ladrillo(ladri,c):
+            ladri.eliminar()
+            pilas.avisar("GAME OVER")
+        pilas.escena_actual().colisiones.agregar(ladri,c,choque_con_ladrillo)
+        def choque_con_piso(ladri,plataforma):
+            ladri.eliminar()
+        pilas.escena_actual().colisiones.agregar(ladri,plataforma,choque_con_piso)
+
+        return True
+    pilas.escena_actual().tareas.siempre(1/0.5, crearla)
+
+    #Herramientas derecha
+    herramienta=HerramientaDe()
+    def crearhe():
+        herra=HerramientaDe2()
+        def choque_con_herramienta(herra,c):
+            herra.eliminar()
+            puntaje.aumentar(1)
+        pilas.escena_actual().colisiones.agregar(herra,c,choque_con_herramienta)
+        return True
+    pilas.escena_actual().tareas.siempre(1/0.4, crearhe)
+    def choque_con_herramienta(herramienta,c):
+            herramienta.eliminar()
+    pilas.escena_actual().colisiones.agregar(herramienta,c,choque_con_herramienta)
+    #Herramientas Izquierda
+    herramienta=HerramientaIz()
+    def crearhe():
+        herra=HerramientaIz2()
+        def choque_con_herramienta(herra,c):
+            herra.eliminar()
+            puntaje.aumentar(1)
+        pilas.escena_actual().colisiones.agregar(herra,c,choque_con_herramienta)
+        return True
+    pilas.escena_actual().tareas.siempre(1/0.4, crearhe)
+    def choque_con_herramienta(herramienta,c):
+            herramienta.eliminar()
+    pilas.escena_actual().colisiones.agregar(herramienta,c,choque_con_herramienta)
+
+    #Puntaje
+
+    texto = pilas.actores.Texto('Puntos:')
+    texto.x = 130
+    texto.y = 210
+
+
+    #Temporizador
+    t = pilas.actores.Temporizador()
+
+    def funcion_callback():
+        pilas.avisar("El juego termino!")
+
+    t.ajustar(60, funcion_callback)
+    t.iniciar()
+    t.y= 210
+    menu.eliminar()
+
+def ayuda():
+    'Ayuda'
+
+def salir_del_juego():
+    pilas.terminar()
+    
+
+menu = pilas.actores.Menu([('Jugar', iniciar_juego),
+                    ('Ayuda', ayuda),
+                    ('Salir', salir_del_juego)])
+
+
+pilas.ejecutar()

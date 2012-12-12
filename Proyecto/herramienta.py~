@@ -1,0 +1,21 @@
+import pilas
+from pilas.actores import Actor
+import random
+#Clase HERRAMIENTA
+class Herramienta(Actor):"""Aca definimos las cualidades que va a tener nuestro actor"""
+        def __init__(self, x=0,y=240):
+            import random
+            xHe=[300,250,200,0,-200,-250,-300]
+            imagen = pilas.imagenes.cargar('Personajes/llave.png')
+            random.shuffle(xHe)
+            Actor.__init__(self, imagen)
+            self.rotacion = 0
+            self.x = xHe
+            self.y = y
+            self.radio_de_colision = 30
+            self.escala=0.1
+
+        def actualizar(self):
+            self.y=self.y-2
+            if self.y == -210:
+                self.y=240
